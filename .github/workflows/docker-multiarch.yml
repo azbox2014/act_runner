@@ -37,25 +37,6 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       # =========================
-      # changelog
-      # =========================
-      - name: Generate changelog
-        if: startsWith(github.ref, 'refs/tags/')
-        id: changelog
-        run: |
-          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || true)
-
-          if [ -z "$PREV_TAG" ]; then
-            git log --pretty=format:"- %s" > CHANGELOG.md
-          else
-            git log ${PREV_TAG}..HEAD --pretty=format:"- %s" > CHANGELOG.md
-          fi
-
-          echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
-          cat CHANGELOG.md >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-      # =========================
       # buildx
       # =========================
       - name: Set up QEMU
@@ -100,15 +81,3 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # =========================
-      # release
-      # =========================
-      - name: Create GitHub Release
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ github.ref_name }}
-          name: Release ${{ steps.version.outputs.version }}
-          body: |
-            ## 🚀 Changes
-            ${{ steps.changelog.outputs.CHANGELOG || '- Initial release' }}
