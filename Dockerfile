@@ -6,7 +6,7 @@ ARG TARGETARCH
 ENV VERSION=0.6.0
 ENV TZ=Asia/Shanghai
 ENV GITEA_INSTANCE_URL=https://gitea.com
-ENV GITEA_RUNNER_REGISTRATION_TOKEN
+ENV GITEA_RUNNER_REGISTRATION_TOKEN=
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone
