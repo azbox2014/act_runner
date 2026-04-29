@@ -5,6 +5,8 @@ FROM ubuntu:22.04
 ARG TARGETARCH
 ENV VERSION=0.6.0
 ENV TZ=Asia/Shanghai
+ENV GITEA_INSTANCE_URL=https://gitea.com
+ENV GITEA_RUNNER_REGISTRATION_TOKEN
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone
@@ -83,6 +85,8 @@ RUN set -eux; \
     FLUX_VERSION="2.3.0"; \
     curl -s https://fluxcd.io/install.sh | bash
 
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 # =========================
 # cleanup
 # =========================
@@ -90,4 +94,4 @@ RUN rm -f /tmp/arch.env
 
 WORKDIR /opt/act-runner
 
-CMD ["/usr/local/bin/act_runner", "daemon", "--once"]
+CMD ["/entrypoint.sh"]
