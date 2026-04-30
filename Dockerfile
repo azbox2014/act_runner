@@ -94,6 +94,24 @@ RUN set -eux; \
     FLUX_VERSION="2.3.0"; \
     curl -s https://fluxcd.io/install.sh | bash
 
+# =========================
+# buildkit (buildctl)
+# =========================
+RUN set -eux; \
+    . /tmp/arch.env; \
+    BUILDKIT_VERSION="v0.24.0"; \
+    case "${ARCH}" in \
+        amd64) BUILDKIT_ARCH="amd64" ;; \
+        arm64) BUILDKIT_ARCH="arm64" ;; \
+        arm) BUILDKIT_ARCH="arm-v7" ;; \
+        *) echo "unsupported arch for buildkit: ${ARCH}" && exit 1 ;; \
+    esac; \
+    curl -L "https://github.com/moby/buildkit/releases/download/${BUILDKIT_VERSION}/buildkit-${BUILDKIT_VERSION}.linux-${BUILDKIT_ARCH}.tar.gz" -o buildkit.tgz; \
+    tar -xzf buildkit.tgz; \
+    mv bin/buildctl /usr/local/bin/buildctl; \
+    chmod +x /usr/local/bin/buildctl; \
+    rm -rf buildkit.tgz bin
+
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 # =========================
