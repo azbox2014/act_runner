@@ -18,6 +18,7 @@ RUN apt update && apt install -y --no-install-recommends \
     curl \
     git \
     jq \
+    skopeo \
     ca-certificates \
     tzdata \
     wget \
