@@ -129,6 +129,19 @@ RUN set -eux; \
     chmod +x /usr/local/bin/buildctl; \
     rm -rf buildkit.tgz bin
 
+# =========================
+# docker cli (remote daemon)
+# =========================
+RUN set -eux; \
+    . /tmp/arch.env; \
+    DOCKER_VERSION="28.0.4"; \
+    curl -L "https://download.docker.com/linux/static/stable/${ARCH}/docker-${DOCKER_VERSION}.tgz" -o docker.tgz; \
+    tar -xzf docker.tgz; \
+    mv docker/docker /usr/local/bin/docker; \
+    chmod +x /usr/local/bin/docker; \
+    rm -rf docker.tgz docker
+
+
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 # =========================
