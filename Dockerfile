@@ -123,11 +123,12 @@ RUN set -eux; \
         arm) BUILDKIT_ARCH="arm-v7" ;; \
         *) echo "unsupported arch for buildkit: ${ARCH}" && exit 1 ;; \
     esac; \
+    mkdir -p /tmp/buildkit-extract; \
     curl -L "https://github.com/moby/buildkit/releases/download/${BUILDKIT_VERSION}/buildkit-${BUILDKIT_VERSION}.linux-${BUILDKIT_ARCH}.tar.gz" -o buildkit.tgz; \
-    tar -xzf buildkit.tgz; \
-    mv bin/buildctl /usr/local/bin/buildctl; \
+    tar -xzf buildkit.tgz -C /tmp/buildkit-extract; \
+    mv /tmp/buildkit-extract/bin/buildctl /usr/local/bin/buildctl; \
     chmod +x /usr/local/bin/buildctl; \
-    rm -rf buildkit.tgz bin
+    rm -rf buildkit.tgz /tmp/buildkit-extract
 
 # =========================
 # docker cli (remote daemon)
