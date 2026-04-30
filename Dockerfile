@@ -136,7 +136,13 @@ RUN set -eux; \
 RUN set -eux; \
     . /tmp/arch.env; \
     DOCKER_VERSION="28.0.4"; \
-    curl -L "https://download.docker.com/linux/static/stable/${ARCH}/docker-${DOCKER_VERSION}.tgz" -o docker.tgz; \
+    case "${ARCH}" in \
+        amd64) DOCKER_ARCH="x86_64" ;; \
+        arm64) DOCKER_ARCH="aarch64" ;; \
+        arm) DOCKER_ARCH="armhf" ;; \
+        *) echo "unsupported arch for docker cli: ${ARCH}" && exit 1 ;; \
+    esac; \
+    curl -fL "https://download.docker.com/linux/static/stable/${DOCKER_ARCH}/docker-${DOCKER_VERSION}.tgz" -o docker.tgz; \
     tar -xzf docker.tgz; \
     mv docker/docker /usr/local/bin/docker; \
     chmod +x /usr/local/bin/docker; \
