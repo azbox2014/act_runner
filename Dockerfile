@@ -23,8 +23,16 @@ RUN apt update && apt install -y --no-install-recommends \
     wget \
     unzip \
     gnupg \
-    nodejs \
     && rm -rf /var/lib/apt/lists/*
+
+# =========================
+# nodejs (latest LTS)
+# =========================
+RUN set -eux; \
+    apt update; \
+    curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -; \
+    apt install -y --no-install-recommends nodejs; \
+    rm -rf /var/lib/apt/lists/*
 
 
 # =========================
