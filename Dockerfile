@@ -124,6 +124,7 @@ RUN set -eux; \
     chmod +x /usr/local/bin/docker; \
     rm -rf docker.tgz docker
 
+
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 # =========================
