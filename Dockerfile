@@ -94,6 +94,23 @@ RUN set -eux; \
     FLUX_VERSION="2.3.0"; \
     curl -s https://fluxcd.io/install.sh | bash
 
+
+# =========================
+# docker buildx cli plugin
+# =========================
+RUN set -eux; \
+    . /tmp/arch.env; \
+    BUILDX_VERSION="v0.21.1"; \
+    case "${ARCH}" in \
+        amd64) BUILDX_ARCH="amd64" ;; \
+        arm64) BUILDX_ARCH="arm64" ;; \
+        arm) BUILDX_ARCH="arm-v7" ;; \
+        *) echo "unsupported arch for buildx: ${ARCH}" && exit 1 ;; \
+    esac; \
+    mkdir -p /usr/local/lib/docker/cli-plugins; \
+    curl -L "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-${BUILDX_ARCH}" \
+      -o /usr/local/lib/docker/cli-plugins/docker-buildx; \
+    chmod +x /usr/local/lib/docker/cli-plugins/docker-buildx
 # =========================
 # buildkit (buildctl)
 # =========================
