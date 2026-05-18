@@ -14,7 +14,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 # =========================
 # base tools
 # =========================
-RUN apt update && apt install -y --no-install-recommends \
+RUN set -eux; \
+    apt update && apt install -y --no-install-recommends \
     curl \
     git \
     jq \
@@ -24,14 +25,12 @@ RUN apt update && apt install -y --no-install-recommends \
     wget \
     unzip \
     gnupg \
-    rsync \
-    && rm -rf /var/lib/apt/lists/*
+    rsync
 
 # =========================
 # nodejs (latest LTS)
 # =========================
 RUN set -eux; \
-    apt update; \
     curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -; \
     apt install -y --no-install-recommends nodejs; \
     rm -rf /var/lib/apt/lists/*
