@@ -24,6 +24,7 @@ RUN apt update && apt install -y --no-install-recommends \
     wget \
     unzip \
     gnupg \
+    rsync \
     && rm -rf /var/lib/apt/lists/*
 
 # =========================
