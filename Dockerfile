@@ -151,7 +151,7 @@ RUN set -eux; \
     rm -rf docker.tgz docker
 
 # install age
-RUN AGE_VERSION=v1.2.0 && \
+RUN AGE_VERSION=v1.3.1 && \
     curl -L https://github.com/FiloSottile/age/releases/download/${AGE_VERSION}/age-${AGE_VERSION}-linux-amd64.tar.gz \
     | tar xz && \
     mv age/age /usr/local/bin/ && \
@@ -159,11 +159,10 @@ RUN AGE_VERSION=v1.2.0 && \
     chmod +x /usr/local/bin/age*
 
 # install sops
-RUN SOPS_VERSION=v3.8.1 && \
+RUN SOPS_VERSION=v3.12.2 && \
     curl -L https://github.com/getsops/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux.amd64 \
     -o /usr/local/bin/sops && \
     chmod +x /usr/local/bin/sops
-
 
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
