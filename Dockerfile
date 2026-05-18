@@ -25,7 +25,8 @@ RUN set -eux; \
     wget \
     unzip \
     gnupg \
-    rsync
+    rsync \
+    openssh-client
 
 # =========================
 # nodejs (latest LTS)
