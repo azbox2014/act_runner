@@ -26,6 +26,7 @@ RUN set -eux; \
     unzip \
     gnupg \
     rsync \
+    rclone \
     openssh-client
 
 # =========================
