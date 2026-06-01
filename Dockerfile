@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.6
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 ARG TARGETARCH
 ENV VERSION=0.6.0
