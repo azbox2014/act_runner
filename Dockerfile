@@ -160,7 +160,7 @@ RUN AGE_VERSION=v1.3.1 && \
     chmod +x /usr/local/bin/age*
 
 # install sops
-RUN SOPS_VERSION=v3.12.2 && \
+RUN SOPS_VERSION=v3.13.1 && \
     curl -L https://github.com/getsops/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux.amd64 \
     -o /usr/local/bin/sops && \
     chmod +x /usr/local/bin/sops
