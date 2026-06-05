@@ -8,6 +8,10 @@ on:
       - "v*.*.*"
   workflow_dispatch:
 
+  pull_request:
+    branches:
+      - 'main'
+
 env:
   IMAGE_NAME: act-runner
 
@@ -93,7 +97,8 @@ jobs:
             ${{ secrets.QCR_REGISTRY }}/osc-org/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
-            type=raw,value=${{ steps.version.outputs.version }},enable=${{ startsWith(github.ref, 'refs/tags/') }}
+            type=raw,value=${{ steps.version.outputs.version }},enable=${{ startsWith(github.ref, 'refs/tags/v') }}
+            type=raw,value=staging,enable=${{ github.event_name != 'pull_request' }}
 
       # =========================
       # build
